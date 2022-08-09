@@ -4,9 +4,13 @@
  */
 package com.sistemasoperativos.productor_consumidor.Vista;
 
+import com.sistemasoperativos.productor_consumidor.Instrucciones.Hilo_Entregar_Pedidos;
+import com.sistemasoperativos.productor_consumidor.Instrucciones.Hilo_Hacer_Pedidos;
+import com.sistemasoperativos.productor_consumidor.Instrucciones.Hilo_Pendientes_Cocinar;
 import com.sistemasoperativos.productor_consumidor.Instrucciones.Procesos;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.concurrent.Semaphore;
 
 /**
  *
@@ -20,6 +24,7 @@ public class Vista_Principal extends javax.swing.JFrame implements ActionListene
     public Vista_Principal() {
         initComponents();
         btnDetener.addActionListener(this);
+        btnEmpezar.addActionListener(this);
     }
 
     /**
@@ -32,13 +37,18 @@ public class Vista_Principal extends javax.swing.JFrame implements ActionListene
     private void initComponents() {
 
         btnDetener = new javax.swing.JButton();
+        btnEmpezar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
 
         btnDetener.setText("Detener");
         getContentPane().add(btnDetener);
-        btnDetener.setBounds(157, 131, 75, 23);
+        btnDetener.setBounds(220, 130, 78, 23);
+
+        btnEmpezar.setText("Empezar");
+        getContentPane().add(btnEmpezar);
+        btnEmpezar.setBounds(50, 130, 100, 23);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -80,6 +90,7 @@ public class Vista_Principal extends javax.swing.JFrame implements ActionListene
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDetener;
+    private javax.swing.JButton btnEmpezar;
     // End of variables declaration//GEN-END:variables
 
     @Override
@@ -87,6 +98,22 @@ public class Vista_Principal extends javax.swing.JFrame implements ActionListene
         if(e.getSource()==btnDetener){
             Procesos.iterar=false;
         }
+        if (e.getSource()==btnEmpezar){
+            Procesos.iterar=true;
+            empezar();
+        }
         //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    public void empezar(){
+        Semaphore semaforo=new Semaphore(1);
+        //final Procesos proceso=new Procesos(semaforo);
+        Hilo_Hacer_Pedidos hilo_pedidos=new Hilo_Hacer_Pedidos(semaforo);
+        Hilo_Pendientes_Cocinar hilo_cocinar=new Hilo_Pendientes_Cocinar(semaforo);
+        Hilo_Entregar_Pedidos hilo_entregar=new Hilo_Entregar_Pedidos(semaforo);
+        hilo_pedidos.start();
+        hilo_cocinar.start();
+        hilo_entregar.start();
+        
+
     }
 }
