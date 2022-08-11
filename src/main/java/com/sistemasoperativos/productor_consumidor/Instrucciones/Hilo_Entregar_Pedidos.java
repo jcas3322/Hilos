@@ -18,19 +18,19 @@ public class Hilo_Entregar_Pedidos extends Thread{
     }
     @Override
     public void run(){
-        while(Procesos.iterar){
+        while(Buffer_General.iterar){
         try {
             this.semaforo.acquire();
-            if (Procesos.mesa_bufer.size()==Procesos.maximo_de_pedidos &&
-                    Procesos.pendientes_a_cocinar.size()==0){
-                for(Pedidos pedido:Procesos.mesa_bufer){
+            if (Buffer_General.mesa_bufer.size()==Buffer_General.maximo_de_pedidos &&
+                    Buffer_General.pendientes_a_cocinar.size()==0){
+                for(Pedidos pedido:Buffer_General.mesa_bufer){
                     Thread.sleep(1000);
                     //realizar instruccion
                     System.out.println("Entregando Pedido");
                     System.out.println("Cliente " + pedido.getCliente_id()
                             + " shuko de " +pedido.getTipo_de_shuko());
                 }
-                Procesos.mesa_bufer.clear();
+                Buffer_General.mesa_bufer.clear();
             }
         } catch (Exception e) {
             e.printStackTrace();

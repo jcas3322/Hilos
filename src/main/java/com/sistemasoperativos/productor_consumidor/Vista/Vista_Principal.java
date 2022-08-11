@@ -7,7 +7,9 @@ package com.sistemasoperativos.productor_consumidor.Vista;
 import com.sistemasoperativos.productor_consumidor.Instrucciones.Hilo_Entregar_Pedidos;
 import com.sistemasoperativos.productor_consumidor.Instrucciones.Hilo_Hacer_Pedidos;
 import com.sistemasoperativos.productor_consumidor.Instrucciones.Hilo_Pendientes_Cocinar;
-import com.sistemasoperativos.productor_consumidor.Instrucciones.Procesos;
+import com.sistemasoperativos.productor_consumidor.Instrucciones.Buffer_General;
+import com.sistemasoperativos.productor_consumidor.Instrucciones.Dibujar;
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.concurrent.Semaphore;
@@ -18,11 +20,16 @@ import java.util.concurrent.Semaphore;
  */
 public class Vista_Principal extends javax.swing.JFrame implements ActionListener{
 
+    private int x,y,fijox,fijoy;
+    private Dibujar dibujar=new Dibujar();
     /**
      * Creates new form Vista_Principal
      */
     public Vista_Principal() {
         initComponents();
+        this.add(dibujar,BorderLayout.CENTER);
+        fijox=imagen_cocinero.getX();
+        fijoy=imagen_cocinero.getY();
         btnDetener.addActionListener(this);
         btnEmpezar.addActionListener(this);
     }
@@ -38,17 +45,23 @@ public class Vista_Principal extends javax.swing.JFrame implements ActionListene
 
         btnDetener = new javax.swing.JButton();
         btnEmpezar = new javax.swing.JButton();
+        imagen_cocinero = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
 
         btnDetener.setText("Detener");
         getContentPane().add(btnDetener);
-        btnDetener.setBounds(220, 130, 78, 23);
+        btnDetener.setBounds(410, 180, 110, 24);
 
         btnEmpezar.setText("Empezar");
         getContentPane().add(btnEmpezar);
-        btnEmpezar.setBounds(50, 130, 100, 23);
+        btnEmpezar.setBounds(410, 130, 100, 24);
+
+        imagen_cocinero.setIcon(new javax.swing.ImageIcon("/home/julioaguilar/NetBeansProjects/Hilos/src/main/java/com/sistemasoperativos/productor_consumidor/Vista/entregando.png")); // NOI18N
+        imagen_cocinero.setText("jLabel1");
+        getContentPane().add(imagen_cocinero);
+        imagen_cocinero.setBounds(140, 90, 240, 200);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -56,50 +69,20 @@ public class Vista_Principal extends javax.swing.JFrame implements ActionListene
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Vista_Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Vista_Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Vista_Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Vista_Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Vista_Principal().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDetener;
     private javax.swing.JButton btnEmpezar;
+    private javax.swing.JLabel imagen_cocinero;
     // End of variables declaration//GEN-END:variables
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()==btnDetener){
-            Procesos.iterar=false;
+            Buffer_General.iterar=false;
         }
         if (e.getSource()==btnEmpezar){
-            Procesos.iterar=true;
+            Buffer_General.iterar=true;
             empezar();
         }
         //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -107,13 +90,22 @@ public class Vista_Principal extends javax.swing.JFrame implements ActionListene
     public void empezar(){
         Semaphore semaforo=new Semaphore(1);
         //final Procesos proceso=new Procesos(semaforo);
-        Hilo_Hacer_Pedidos hilo_pedidos=new Hilo_Hacer_Pedidos(semaforo);
+        Hilo_Hacer_Pedidos hilo_pedidos=new Hilo_Hacer_Pedidos(semaforo, this);
         Hilo_Pendientes_Cocinar hilo_cocinar=new Hilo_Pendientes_Cocinar(semaforo);
         Hilo_Entregar_Pedidos hilo_entregar=new Hilo_Entregar_Pedidos(semaforo);
         hilo_pedidos.start();
         hilo_cocinar.start();
         hilo_entregar.start();
-        
-
+    }
+    
+    public void mover_cocinero_iz(){
+        x=fijox;
+        y=fijoy;
+        imagen_cocinero.setLocation(x+2, y);
+    }
+    public void mover_cocinero_der(){
+        x=fijox;
+        y=fijoy;
+        imagen_cocinero.setLocation(x-2, y);
     }
 }

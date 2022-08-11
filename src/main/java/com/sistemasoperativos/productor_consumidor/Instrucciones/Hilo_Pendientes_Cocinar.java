@@ -18,20 +18,20 @@ public class Hilo_Pendientes_Cocinar extends Thread{
     }
     @Override
     public void run(){
-        while (Procesos.iterar){
+        while (Buffer_General.iterar){
         try {
             this.semaforo.acquire();
-            if(Procesos.pendientes_a_cocinar.size()==Procesos.maximo_de_pedidos &&
-                    Procesos.mesa_bufer.size()==0){
-                for(Pedidos pedido:Procesos.pendientes_a_cocinar){
-                    Procesos.mesa_bufer.add(pedido);
+            if(Buffer_General.pendientes_a_cocinar.size()==Buffer_General.maximo_de_pedidos &&
+                    Buffer_General.mesa_bufer.size()==0){
+                for(Pedidos pedido:Buffer_General.pendientes_a_cocinar){
+                    Buffer_General.mesa_bufer.add(pedido);
                     Thread.sleep(1000);
                     //realizar instruccion de animacion
                     System.out.println("Cocinero Cocinando");
                     System.out.println("Cliente "+ pedido.getCliente_id()
                         + " shuko de " + pedido.getTipo_de_shuko());
                 }
-                Procesos.pendientes_a_cocinar.clear();
+                Buffer_General.pendientes_a_cocinar.clear();
             }
         } catch (Exception e) {
             e.printStackTrace();

@@ -13,7 +13,7 @@ import java.util.concurrent.Semaphore;
  *En esta clase se implementaran los diferentes procesos de cada hilo
  * @author julioaguilar
  */
-public class Procesos {
+public class Buffer_General {
     //el siguiente arreglo hace referencia al bufer
     //con un maximo de 5 pedidos en la mesa
     public static List<Pedidos> mesa_bufer=new ArrayList<>();
@@ -26,10 +26,10 @@ public class Procesos {
     //verificacion de si cocinero puedo o no cocinar
     private boolean cocinar=false;//no cocinara hasta que sea true
     
-    public Procesos(Semaphore semaforo){
+    public Buffer_General(Semaphore semaforo){
         this.semaforo=semaforo;
     }
-    
+/*    
     public void cocinero_cocinar(){
         try {
             this.semaforo.acquire();
@@ -94,5 +94,5 @@ public class Procesos {
         }finally{
             this.semaforo.release();
         }
-    }
+    }*/
 }

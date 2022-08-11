@@ -4,12 +4,7 @@
  */
 
 package com.sistemasoperativos.productor_consumidor;
-import com.sistemasoperativos.productor_consumidor.Instrucciones.Hilo_Entregar_Pedidos;
-import com.sistemasoperativos.productor_consumidor.Instrucciones.Hilo_Hacer_Pedidos;
-import com.sistemasoperativos.productor_consumidor.Instrucciones.Hilo_Pendientes_Cocinar;
-import com.sistemasoperativos.productor_consumidor.Instrucciones.Procesos;
 import com.sistemasoperativos.productor_consumidor.Vista.Vista_Principal;
-import java.util.concurrent.Semaphore;
 
 /**
  *
@@ -17,9 +12,9 @@ import java.util.concurrent.Semaphore;
  */
 public class Productor_Consumidor {
 
-    public static void main(String[] args) throws InterruptedException{
+    public static void main(String[] args){
            Vista_Principal vista=new Vista_Principal();
-           vista.setBounds(200,50,200,50);
+           vista.setBounds(100,50,500,500);
            vista.setVisible(true);
         
 /*        int contador=0;
