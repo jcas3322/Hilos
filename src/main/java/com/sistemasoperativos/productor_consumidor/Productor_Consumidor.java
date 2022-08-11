@@ -14,7 +14,8 @@ public class Productor_Consumidor {
 
     public static void main(String[] args){
            Vista_Principal vista=new Vista_Principal();
-           vista.setBounds(100,50,500,500);
+           vista.setBounds(100,50,840,430);
+           vista.setResizable(false);
            vista.setVisible(true);
         
 /*        int contador=0;

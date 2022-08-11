@@ -19,7 +19,7 @@ public class Buffer_General {
     public static List<Pedidos> mesa_bufer=new ArrayList<>();
     public static List<Pedidos> pendientes_a_cocinar=new ArrayList<>();
     //se establece el maximo de pedidos que caben en la mesa
-    public static final int maximo_de_pedidos=5; 
+    public static final int maximo_de_pedidos=4; 
     public static boolean iterar=true;
     //variable que recibe el semaforo enviado desde el main
     private Semaphore semaforo;

@@ -17,14 +17,14 @@ import java.awt.Dimension;
  */
 public class Dibujar extends JPanel{
     
+    
     @Override
     public void paint(Graphics grafica){
-        Dimension tamano=getSize();
-        ImageIcon icon=new ImageIcon("fondo.jpeg");
-        
-        grafica.drawImage(icon.getImage(), 0, 0, tamano.width,tamano.height,null);
+        ImageIcon icon=new ImageIcon("/Users/julioaguilar/NetBeansProjects/Hilos/src/main/java/com/sistemasoperativos/productor_consumidor/Vista/fondo.jpg");
+        //ImageIcon icon=new ImageIcon(this.getClass().getResource("imagenes/fondo.jpg"));
+        grafica.drawImage(icon.getImage(), 0, 0, getWidth(),getHeight(),this);
         setOpaque(false);
-        super.paintChildren(grafica);
+        super.paint(grafica);
     }
     
 }
