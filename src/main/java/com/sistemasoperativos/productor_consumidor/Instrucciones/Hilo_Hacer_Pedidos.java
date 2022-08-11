@@ -27,23 +27,44 @@ public class Hilo_Hacer_Pedidos extends Thread{
             this.semaforo.acquire();
             if(Buffer_General.pendientes_a_cocinar.size()< Buffer_General.maximo_de_pedidos &&
                     Buffer_General.mesa_bufer.size()==0){
+                vista.articulo1_no_visible();
+                vista.articulo2_no_visible();
+                vista.articulo3_no_visible();
+                vista.articulo4_no_visible();
+                vista.cambiar_estado_cocinero_descansando();
                 Pedidos pedido =new Pedidos();
                 int cliente= (int)Math.floor(Math.random()*2+1);
                 int shuko= (int)Math.floor(Math.random()*2+1);
                 pedido.setCliente_id(cliente);
+
+                if (cliente==1 && shuko ==1){
+                    vista.cambiar_estado_cliente1_pide("chorizo");
+                }else if(cliente==1 && shuko==2){
+                    vista.cambiar_estado_cliente1_pide("longaniza");
+                }
+                if (cliente==2 && shuko ==1){
+                    vista.cambiar_estado_cliente2_pide("chorizo");
+                }else if(cliente==2 && shuko==2){
+                    vista.cambiar_estado_cliente2_pide("longaniza");
+                }
+                vista.cocinero_responde();//interactuar con el cliente
                 pedido.setTipo_de_shuko(shuko);
                 Buffer_General.pendientes_a_cocinar.add(pedido);
-                Thread.sleep(5000);
+                //Thread.sleep(5000);
                 System.out.println("Ordenando");
                 System.out.println("Cliente " + cliente + " quiere " + shuko);
+                Thread.sleep(3000);
+                /*
                 int n=0;
                 while(n<25){
+                    
                     vista.mover_cocinero_der();
                     Thread.sleep(150);
                     vista.mover_cocinero_iz();
                     Thread.sleep(150);
                     n++;
                 }
+                */
              }
         } catch (Exception e) {
             e.printStackTrace();

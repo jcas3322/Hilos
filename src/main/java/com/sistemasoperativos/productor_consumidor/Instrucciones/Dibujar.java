@@ -20,7 +20,7 @@ public class Dibujar extends JPanel{
     
     @Override
     public void paint(Graphics grafica){
-        ImageIcon icon=new ImageIcon("/Users/julioaguilar/NetBeansProjects/Hilos/src/main/java/com/sistemasoperativos/productor_consumidor/Vista/fondo.jpg");
+        ImageIcon icon=new ImageIcon("/Users/julioaguilar/NetBeansProjects/Hilos/src/imagenes/fondo2.png");
         //ImageIcon icon=new ImageIcon(this.getClass().getResource("imagenes/fondo.jpg"));
         grafica.drawImage(icon.getImage(), 0, 0, getWidth(),getHeight(),this);
         setOpaque(false);

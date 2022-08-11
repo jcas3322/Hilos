@@ -27,8 +27,8 @@ public class Vista_Principal extends javax.swing.JFrame implements ActionListene
     private String chorizo="/Users/julioaguilar/NetBeansProjects/Hilos/src/imagenes/2/chorizo.gif";
     private String longaniza="/Users/julioaguilar/NetBeansProjects/Hilos/src/imagenes/2/longaniza.gif";
     private String cocinando="/Users/julioaguilar/NetBeansProjects/Hilos/src/imagenes/2/cocinando.gif";
-    private String descansando="/Users/julioaguilar/NetBeansProjects/Hilos/src/imagenes/2/descansando.gif";
-    private String cliente1_pide="/Users/julioaguilar/NetBeansProjects/Hilos/src/imagenes/2/cliente1.gif";
+    private String descansando="/Users/julioaguilar/NetBeansProjects/Hilos/src/imagenes/descansando.png";
+    private String cliente1_pide="/Users/julioaguilar/NetBeansProjects/Hilos/src/imagenes/cliente1.gif";
     private String cliente2_pide="/Users/julioaguilar/NetBeansProjects/Hilos/src/imagenes/2/cliente2.gif";
     private String cliente1_come="/Users/julioaguilar/NetBeansProjects/Hilos/src/imagenes/2/comiendo1.gif";
     private String cliente2_come="/Users/julioaguilar/NetBeansProjects/Hilos/src/imagenes/2/comiendo2.gif";
@@ -37,12 +37,16 @@ public class Vista_Principal extends javax.swing.JFrame implements ActionListene
      */
     
     public void cambiar_estado_cliente1_come(){cliente1.setIcon(new ImageIcon(cliente1_come));}
-    public void cambiar_estado_cliente1_pide(){cliente1.setIcon(new ImageIcon(cliente1_pide));}
+    public void cambiar_estado_cliente1_pide(String pedido){cliente1.setIcon(new ImageIcon(cliente1_pide));
+        cliente1_habla.setText("Dame de " + pedido +" porfa");
+    }
     public void cambiar_estado_cliente2_come(){cliente2.setIcon(new ImageIcon(cliente2_come));}
-    public void cambiar_estado_cliente2_pide(){cliente2.setIcon(new ImageIcon(cliente1_pide));}
+    public void cambiar_estado_cliente2_pide(String pedido){cliente2.setIcon(new ImageIcon(cliente2_pide));
+        cliente2_habla.setText("Dame de " + pedido + " porfa");
+    }
     public void cambiar_estado_cocinero_cocinando(){imagen_cocinero.setIcon(new ImageIcon(cocinando));}
     public void cambiar_estado_cocinero_descansando(){imagen_cocinero.setIcon(new ImageIcon(descansando));}
-    public void mover_articulo_1(){
+    public void mover_articulo_1() throws InterruptedException{
         int n=1;
         while (n<50){
             if (n>1 && n < 4){
@@ -55,9 +59,10 @@ public class Vista_Principal extends javax.swing.JFrame implements ActionListene
                     articulo1.setLocation(original_x_comida+n, original_y_comida+3);
                 }
             }
+            Thread.sleep(100);
         }
     }
-    public void mover_articulo_2(){
+    public void mover_articulo_2() throws InterruptedException{
         int n=1;
         while (n<40){
             if (n>1 && n < 3){
@@ -70,9 +75,10 @@ public class Vista_Principal extends javax.swing.JFrame implements ActionListene
                     articulo1.setLocation(original_x_comida+n, original_y_comida+2);
                 }
             }
+            Thread.sleep(100);
         }
     }
-    public void mover_articulo_3(){
+    public void mover_articulo_3() throws InterruptedException{
         int n=1;
         while (n<30){
             if (n>1 && n < 2){
@@ -85,9 +91,10 @@ public class Vista_Principal extends javax.swing.JFrame implements ActionListene
                     articulo1.setLocation(original_x_comida+n, original_y_comida+1);
                 }
             }
+            Thread.sleep(100);
         }
     }
-    public void mover_articulo_4(){
+    public void mover_articulo_4() throws InterruptedException{
         int n=1;
         while (n<20){
             if (n>1 && n < 4){
@@ -100,23 +107,53 @@ public class Vista_Principal extends javax.swing.JFrame implements ActionListene
                     articulo1.setLocation(original_x_comida+n, original_y_comida+3);
                 }
             }
+            Thread.sleep(100);
         }
     }
+    public void articulo1_visible(){
+        articulo1.setVisible(true);        
+    }
+    public void articulo2_visible(){
+        articulo2.setVisible(true);        
+    }
+    public void articulo3_visible(){
+        articulo3.setVisible(true);        
+    }
+    public void articulo4_visible(){
+        articulo4.setVisible(true);        
+    }
+    public void articulo1_no_visible(){
+        articulo1.setVisible(false);        
+    }
+    public void articulo2_no_visible(){
+        articulo2.setVisible(false);        
+    }
+    public void articulo3_no_visible(){
+        articulo3.setVisible(false);        
+    }
+    public void articulo4_no_visible(){
+        articulo4.setVisible(false);        
+    }
 
+    public void cocinero_responde() throws InterruptedException{
+        mensaje_cocinero.setText("Ok chino, ¿algo mas?");
+        Thread.sleep(3000);
+        mensaje_cocinero.setText("");
+    }
     
     public Vista_Principal() {
         initComponents();
         original_x_comida=articulo1.getX();
         original_y_comida=articulo1.getY();
-        imagen_cocinero.setIcon(new ImageIcon("/Users/julioaguilar/NetBeansProjects/Hilos/src/imagenes/2/cocinando.gif"));
+        //imagen_cocinero.setIcon(new ImageIcon("/Users/julioaguilar/NetBeansProjects/Hilos/src/imagenes/2/cocinando.gif"));
         fijox=imagen_cocinero.getX();
         fijoy=imagen_cocinero.getY();
         btnDetener.addActionListener(this);
         btnEmpezar.addActionListener(this);
-        //articulo1.setVisible(false);
-        //articulo2.setVisible(false);
-        //articulo3.setVisible(false);
-        //articulo4.setVisible(false);
+        articulo1.setVisible(false);
+        articulo2.setVisible(false);
+        articulo3.setVisible(false);
+        articulo4.setVisible(false);
     }
 
     /**
@@ -140,6 +177,7 @@ public class Vista_Principal extends javax.swing.JFrame implements ActionListene
         articulo2 = new javax.swing.JLabel();
         articulo3 = new javax.swing.JLabel();
         articulo4 = new javax.swing.JLabel();
+        mensaje_cocinero = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -154,25 +192,27 @@ public class Vista_Principal extends javax.swing.JFrame implements ActionListene
         jPanel1.add(btnDetener);
         btnDetener.setBounds(410, 20, 110, 23);
 
-        imagen_cocinero.setIcon(new javax.swing.ImageIcon("/Users/julioaguilar/NetBeansProjects/Hilos/src/imagenes/2/cocinando.gif")); // NOI18N
+        imagen_cocinero.setIcon(new javax.swing.ImageIcon("/Users/julioaguilar/NetBeansProjects/Hilos/src/imagenes/descansando.png")); // NOI18N
         jPanel1.add(imagen_cocinero);
-        imagen_cocinero.setBounds(150, 200, 100, 100);
+        imagen_cocinero.setBounds(150, 220, 80, 160);
 
         cliente1.setIcon(new javax.swing.ImageIcon("/Users/julioaguilar/NetBeansProjects/Hilos/src/imagenes/cliente1.gif")); // NOI18N
         jPanel1.add(cliente1);
-        cliente1.setBounds(710, 160, 120, 140);
+        cliente1.setBounds(710, 210, 120, 140);
 
         cliente2.setIcon(new javax.swing.ImageIcon("/Users/julioaguilar/NetBeansProjects/Hilos/src/imagenes/2/cliente2.gif")); // NOI18N
         jPanel1.add(cliente2);
-        cliente2.setBounds(620, 220, 100, 100);
+        cliente2.setBounds(620, 260, 100, 100);
 
-        cliente1_habla.setText("Pedido cliente 1");
+        cliente1_habla.setForeground(new java.awt.Color(255, 255, 255));
+        cliente1_habla.setText("Sin");
         jPanel1.add(cliente1_habla);
-        cliente1_habla.setBounds(720, 140, 110, 17);
+        cliente1_habla.setBounds(670, 190, 160, 17);
 
-        cliente2_habla.setText("Pedido cliente 2");
+        cliente2_habla.setForeground(new java.awt.Color(255, 255, 255));
+        cliente2_habla.setText("Sin ");
         jPanel1.add(cliente2_habla);
-        cliente2_habla.setBounds(620, 200, 120, 17);
+        cliente2_habla.setBounds(550, 230, 170, 17);
 
         articulo1.setIcon(new javax.swing.ImageIcon("/Users/julioaguilar/NetBeansProjects/Hilos/src/imagenes/2/chorizo.gif")); // NOI18N
         jPanel1.add(articulo1);
@@ -189,6 +229,11 @@ public class Vista_Principal extends javax.swing.JFrame implements ActionListene
         articulo4.setIcon(new javax.swing.ImageIcon("/Users/julioaguilar/NetBeansProjects/Hilos/src/imagenes/2/chorizo.gif")); // NOI18N
         jPanel1.add(articulo4);
         articulo4.setBounds(320, 200, 90, 100);
+
+        mensaje_cocinero.setForeground(new java.awt.Color(255, 255, 255));
+        mensaje_cocinero.setText("Sin");
+        jPanel1.add(mensaje_cocinero);
+        mensaje_cocinero.setBounds(170, 190, 160, 17);
 
         getContentPane().add(jPanel1);
         jPanel1.setBounds(0, 0, 840, 400);
@@ -210,6 +255,7 @@ public class Vista_Principal extends javax.swing.JFrame implements ActionListene
     private javax.swing.JLabel cliente2_habla;
     private javax.swing.JLabel imagen_cocinero;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel mensaje_cocinero;
     // End of variables declaration//GEN-END:variables
 
     @Override
@@ -227,7 +273,7 @@ public class Vista_Principal extends javax.swing.JFrame implements ActionListene
         Semaphore semaforo=new Semaphore(1);
         //final Procesos proceso=new Procesos(semaforo);
         Hilo_Hacer_Pedidos hilo_pedidos=new Hilo_Hacer_Pedidos(semaforo, this);
-        Hilo_Pendientes_Cocinar hilo_cocinar=new Hilo_Pendientes_Cocinar(semaforo);
+        Hilo_Pendientes_Cocinar hilo_cocinar=new Hilo_Pendientes_Cocinar(semaforo,this);
         Hilo_Entregar_Pedidos hilo_entregar=new Hilo_Entregar_Pedidos(semaforo);
         hilo_pedidos.start();
         hilo_cocinar.start();

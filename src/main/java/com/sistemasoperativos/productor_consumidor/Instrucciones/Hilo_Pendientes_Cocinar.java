@@ -4,6 +4,7 @@
  */
 package com.sistemasoperativos.productor_consumidor.Instrucciones;
 import com.sistemasoperativos.productor_consumidor.Pojos.Pedidos;
+import com.sistemasoperativos.productor_consumidor.Vista.Vista_Principal;
 import java.util.concurrent.Semaphore;
 
 /**
@@ -12,9 +13,11 @@ import java.util.concurrent.Semaphore;
  */
 public class Hilo_Pendientes_Cocinar extends Thread{
     private Semaphore semaforo;
+    private Vista_Principal vista;
     //public boolean iterar=true;
-    public Hilo_Pendientes_Cocinar(Semaphore semaforo){
+    public Hilo_Pendientes_Cocinar(Semaphore semaforo, Vista_Principal vista){
         this.semaforo=semaforo;
+        this.vista=vista;
     }
     @Override
     public void run(){
@@ -25,6 +28,8 @@ public class Hilo_Pendientes_Cocinar extends Thread{
                     Buffer_General.mesa_bufer.size()==0){
                 for(Pedidos pedido:Buffer_General.pendientes_a_cocinar){
                     Buffer_General.mesa_bufer.add(pedido);
+                    vista.cambiar_estado_cocinero_cocinando();
+                    
                     Thread.sleep(1000);
                     //realizar instruccion de animacion
                     System.out.println("Cocinero Cocinando");
