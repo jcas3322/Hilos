@@ -22,13 +22,9 @@ public class Buffer_General {
     public static final int maximo_de_pedidos=4; 
     public static boolean iterar=true;
     //variable que recibe el semaforo enviado desde el main
-    private Semaphore semaforo;
     //verificacion de si cocinero puedo o no cocinar
     private boolean cocinar=false;//no cocinara hasta que sea true
     
-    public Buffer_General(Semaphore semaforo){
-        this.semaforo=semaforo;
-    }
 /*    
     public void cocinero_cocinar(){
         try {

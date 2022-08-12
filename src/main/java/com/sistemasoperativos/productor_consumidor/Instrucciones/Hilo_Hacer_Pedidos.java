@@ -36,7 +36,7 @@ public class Hilo_Hacer_Pedidos extends Thread{
                 int cliente= (int)Math.floor(Math.random()*2+1);
                 int shuko= (int)Math.floor(Math.random()*2+1);
                 pedido.setCliente_id(cliente);
-
+                Thread.sleep(1000);
                 if (cliente==1 && shuko ==1){
                     vista.cambiar_estado_cliente1_pide("chorizo");
                 }else if(cliente==1 && shuko==2){
@@ -53,7 +53,7 @@ public class Hilo_Hacer_Pedidos extends Thread{
                 //Thread.sleep(5000);
                 System.out.println("Ordenando");
                 System.out.println("Cliente " + cliente + " quiere " + shuko);
-                Thread.sleep(3000);
+                Thread.sleep(2000);
                 /*
                 int n=0;
                 while(n<25){

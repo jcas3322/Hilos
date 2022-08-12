@@ -13,6 +13,8 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.concurrent.Semaphore;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 
 /**
@@ -21,9 +23,8 @@ import javax.swing.ImageIcon;
  */
 public class Vista_Principal extends javax.swing.JFrame implements ActionListener{
 
-    private int x,y,fijox,fijoy;
+    private int x,y,fijox,fijoy,cliente1x,cliente2x,cliente1y,cliente2y;
     private int original_x_comida,original_y_comida,x_comida,y_comida;
-    private Dibujar dibujar=new Dibujar();
     private String chorizo="/Users/julioaguilar/NetBeansProjects/Hilos/src/imagenes/2/chorizo.gif";
     private String longaniza="/Users/julioaguilar/NetBeansProjects/Hilos/src/imagenes/2/longaniza.gif";
     private String cocinando="/Users/julioaguilar/NetBeansProjects/Hilos/src/imagenes/2/cocinando.gif";
@@ -32,82 +33,128 @@ public class Vista_Principal extends javax.swing.JFrame implements ActionListene
     private String cliente2_pide="/Users/julioaguilar/NetBeansProjects/Hilos/src/imagenes/2/cliente2.gif";
     private String cliente1_come="/Users/julioaguilar/NetBeansProjects/Hilos/src/imagenes/2/comiendo1.gif";
     private String cliente2_come="/Users/julioaguilar/NetBeansProjects/Hilos/src/imagenes/2/comiendo2.gif";
+    private Semaphore semaforo=new Semaphore(1);
+    private Hilo_Hacer_Pedidos hilo_pedidos=new Hilo_Hacer_Pedidos(semaforo, this);
+    private Hilo_Pendientes_Cocinar hilo_cocinar=new Hilo_Pendientes_Cocinar(semaforo,this);
+    private Hilo_Entregar_Pedidos hilo_entregar=new Hilo_Entregar_Pedidos(semaforo,this);
+
     /**
      * Creates new form Vista_Principal
      */
-    
+    public void imagen1(int i){
+        if (i==1)articulo1.setIcon(new ImageIcon(chorizo));
+        if (i==2)articulo1.setIcon(new ImageIcon(longaniza));
+    }
+    public void imagen2(int i){
+        if (i==1)articulo2.setIcon(new ImageIcon(chorizo));
+        if (i==2)articulo2.setIcon(new ImageIcon(longaniza));
+    }
+    public void imagen3(int i){
+        if (i==1)articulo3.setIcon(new ImageIcon(chorizo));
+        if (i==2)articulo3.setIcon(new ImageIcon(longaniza));
+    }
+    public void imagen4(int i){
+        if (i==1)articulo4.setIcon(new ImageIcon(chorizo));
+        if (i==2)articulo4.setIcon(new ImageIcon(longaniza));
+    }
+    public void mover_cliente1(){
+        cliente1.setLocation(cliente1x-250, cliente1y);
+    }
+    public void mover_cliente2(){
+        cliente2.setLocation(cliente2x-250, cliente2y-20);
+    }
+    public void regresar_cliente1(){
+        cliente1.setLocation(cliente1x, cliente1y);
+        cliente1.setIcon(new ImageIcon(cliente1_pide));
+    }
+    public void regresar_cliente2(){
+        cliente2.setLocation(cliente2x, cliente2y);
+        cliente2.setIcon(new ImageIcon(cliente2_pide));
+    }
     public void cambiar_estado_cliente1_come(){cliente1.setIcon(new ImageIcon(cliente1_come));}
-    public void cambiar_estado_cliente1_pide(String pedido){cliente1.setIcon(new ImageIcon(cliente1_pide));
+    public void cambiar_estado_cliente1_pide(String pedido) throws InterruptedException{cliente1.setIcon(new ImageIcon(cliente1_pide));
         cliente1_habla.setText("Dame de " + pedido +" porfa");
+        Thread.sleep(2000);
+        cliente1_habla.setText(".");
     }
     public void cambiar_estado_cliente2_come(){cliente2.setIcon(new ImageIcon(cliente2_come));}
-    public void cambiar_estado_cliente2_pide(String pedido){cliente2.setIcon(new ImageIcon(cliente2_pide));
+    public void cambiar_estado_cliente2_pide(String pedido) throws InterruptedException{cliente2.setIcon(new ImageIcon(cliente2_pide));
         cliente2_habla.setText("Dame de " + pedido + " porfa");
+        Thread.sleep(2000);
+        cliente2_habla.setText(".");
     }
     public void cambiar_estado_cocinero_cocinando(){imagen_cocinero.setIcon(new ImageIcon(cocinando));}
     public void cambiar_estado_cocinero_descansando(){imagen_cocinero.setIcon(new ImageIcon(descansando));}
     public void mover_articulo_1() throws InterruptedException{
         int n=1;
-        while (n<50){
+        while (n<170){
+            articulo1.setLocation(original_x_comida+n, original_y_comida);
+            /*
             if (n>1 && n < 4){
                 articulo1.setLocation(original_x_comida+n, original_y_comida+n);
-                n++;
             }else{
                 if (n>46){
                     articulo1.setLocation(original_x_comida+n, original_y_comida+(50-n));
                 }else{
                     articulo1.setLocation(original_x_comida+n, original_y_comida+3);
                 }
-            }
-            Thread.sleep(100);
+            }*/
+            n++;
+            Thread.sleep(30);
         }
     }
     public void mover_articulo_2() throws InterruptedException{
         int n=1;
-        while (n<40){
-            if (n>1 && n < 3){
+        while (n<110){
+/*            if (n>1 && n < 3){
                 articulo1.setLocation(original_x_comida+n, original_y_comida+n);
-                n++;
             }else{
                 if (n>37){
                     articulo1.setLocation(original_x_comida+n, original_y_comida+(40-n));
                 }else{
                     articulo1.setLocation(original_x_comida+n, original_y_comida+2);
                 }
-            }
-            Thread.sleep(100);
+            }*/
+            articulo2.setLocation(original_x_comida+n, original_y_comida);
+
+            n++;
+            Thread.sleep(30);
         }
     }
     public void mover_articulo_3() throws InterruptedException{
         int n=1;
-        while (n<30){
+        while (n<53){
+            /*
             if (n>1 && n < 2){
                 articulo1.setLocation(original_x_comida+n, original_y_comida+n);
-                n++;
             }else{
                 if (n>28){
                     articulo1.setLocation(original_x_comida+n, original_y_comida+(30-n));
                 }else{
                     articulo1.setLocation(original_x_comida+n, original_y_comida+1);
                 }
-            }
-            Thread.sleep(100);
+            }*/
+            articulo3.setLocation(original_x_comida+n, original_y_comida);
+            n++;
+            Thread.sleep(30);
         }
     }
     public void mover_articulo_4() throws InterruptedException{
         int n=1;
-        while (n<20){
+        while (n<1){
+            /*
             if (n>1 && n < 4){
                 articulo1.setLocation(original_x_comida+n, original_y_comida+n);
-                n++;
             }else{
                 if (n>16){
                     articulo1.setLocation(original_x_comida+n, original_y_comida+(20-n));
                 }else{
                     articulo1.setLocation(original_x_comida+n, original_y_comida+3);
                 }
-            }
-            Thread.sleep(100);
+            }*/
+            articulo4.setLocation(original_x_comida+n, original_y_comida);
+            n++;
+            Thread.sleep(30);
         }
     }
     public void articulo1_visible(){
@@ -136,6 +183,7 @@ public class Vista_Principal extends javax.swing.JFrame implements ActionListene
     }
 
     public void cocinero_responde() throws InterruptedException{
+        Thread.sleep(2000);
         mensaje_cocinero.setText("Ok chino, ¿algo mas?");
         Thread.sleep(3000);
         mensaje_cocinero.setText("");
@@ -143,8 +191,13 @@ public class Vista_Principal extends javax.swing.JFrame implements ActionListene
     
     public Vista_Principal() {
         initComponents();
+        //System.out.println("Prueba de URL: " + getClass().getResource(""));
         original_x_comida=articulo1.getX();
-        original_y_comida=articulo1.getY();
+        original_y_comida=articulo1.getY()+5;
+        cliente1x=cliente1.getX();
+        cliente1y=cliente1.getY();
+        cliente2x=cliente2.getX();
+        cliente2y=cliente2.getY();
         //imagen_cocinero.setIcon(new ImageIcon("/Users/julioaguilar/NetBeansProjects/Hilos/src/imagenes/2/cocinando.gif"));
         fijox=imagen_cocinero.getX();
         fijoy=imagen_cocinero.getY();
@@ -202,36 +255,36 @@ public class Vista_Principal extends javax.swing.JFrame implements ActionListene
 
         cliente2.setIcon(new javax.swing.ImageIcon("/Users/julioaguilar/NetBeansProjects/Hilos/src/imagenes/2/cliente2.gif")); // NOI18N
         jPanel1.add(cliente2);
-        cliente2.setBounds(620, 260, 100, 100);
+        cliente2.setBounds(610, 260, 100, 100);
 
         cliente1_habla.setForeground(new java.awt.Color(255, 255, 255));
-        cliente1_habla.setText("Sin");
+        cliente1_habla.setText(".");
         jPanel1.add(cliente1_habla);
         cliente1_habla.setBounds(670, 190, 160, 17);
 
         cliente2_habla.setForeground(new java.awt.Color(255, 255, 255));
-        cliente2_habla.setText("Sin ");
+        cliente2_habla.setText(".");
         jPanel1.add(cliente2_habla);
         cliente2_habla.setBounds(550, 230, 170, 17);
 
         articulo1.setIcon(new javax.swing.ImageIcon("/Users/julioaguilar/NetBeansProjects/Hilos/src/imagenes/2/chorizo.gif")); // NOI18N
         jPanel1.add(articulo1);
-        articulo1.setBounds(320, 200, 90, 100);
+        articulo1.setBounds(320, 170, 90, 100);
 
         articulo2.setIcon(new javax.swing.ImageIcon("/Users/julioaguilar/NetBeansProjects/Hilos/src/imagenes/2/chorizo.gif")); // NOI18N
         jPanel1.add(articulo2);
-        articulo2.setBounds(320, 200, 80, 100);
+        articulo2.setBounds(320, 170, 80, 100);
 
         articulo3.setIcon(new javax.swing.ImageIcon("/Users/julioaguilar/NetBeansProjects/Hilos/src/imagenes/2/longaniza.gif")); // NOI18N
         jPanel1.add(articulo3);
-        articulo3.setBounds(310, 210, 80, 100);
+        articulo3.setBounds(310, 170, 80, 100);
 
         articulo4.setIcon(new javax.swing.ImageIcon("/Users/julioaguilar/NetBeansProjects/Hilos/src/imagenes/2/chorizo.gif")); // NOI18N
         jPanel1.add(articulo4);
-        articulo4.setBounds(320, 200, 90, 100);
+        articulo4.setBounds(290, 170, 90, 100);
 
         mensaje_cocinero.setForeground(new java.awt.Color(255, 255, 255));
-        mensaje_cocinero.setText("Sin");
+        mensaje_cocinero.setText(".");
         jPanel1.add(mensaje_cocinero);
         mensaje_cocinero.setBounds(170, 190, 160, 17);
 
@@ -261,7 +314,13 @@ public class Vista_Principal extends javax.swing.JFrame implements ActionListene
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()==btnDetener){
-            Buffer_General.iterar=false;
+            try {
+                Buffer_General.iterar=false;
+                Thread.sleep(3000);
+                btnEmpezar.setEnabled(true);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Vista_Principal.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         if (e.getSource()==btnEmpezar){
             Buffer_General.iterar=true;
@@ -270,14 +329,10 @@ public class Vista_Principal extends javax.swing.JFrame implements ActionListene
         //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     public void empezar(){
-        Semaphore semaforo=new Semaphore(1);
-        //final Procesos proceso=new Procesos(semaforo);
-        Hilo_Hacer_Pedidos hilo_pedidos=new Hilo_Hacer_Pedidos(semaforo, this);
-        Hilo_Pendientes_Cocinar hilo_cocinar=new Hilo_Pendientes_Cocinar(semaforo,this);
-        Hilo_Entregar_Pedidos hilo_entregar=new Hilo_Entregar_Pedidos(semaforo);
         hilo_pedidos.start();
         hilo_cocinar.start();
         hilo_entregar.start();
+        btnEmpezar.setEnabled(false);
     }
     
     public void mover_cocinero_iz(){

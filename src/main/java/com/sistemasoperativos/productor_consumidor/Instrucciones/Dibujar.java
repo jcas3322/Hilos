@@ -21,7 +21,8 @@ public class Dibujar extends JPanel{
     @Override
     public void paint(Graphics grafica){
         ImageIcon icon=new ImageIcon("/Users/julioaguilar/NetBeansProjects/Hilos/src/imagenes/fondo2.png");
-        //ImageIcon icon=new ImageIcon(this.getClass().getResource("imagenes/fondo.jpg"));
+        //ImageIcon icon=new ImageIcon(getClass().getResource("/src/imagenes/fondo2.png"));
+        //System.out.println("Prueba de URL: " + getClass().getResource("/imagenes/fondo2.png"));
         grafica.drawImage(icon.getImage(), 0, 0, getWidth(),getHeight(),this);
         setOpaque(false);
         super.paint(grafica);
