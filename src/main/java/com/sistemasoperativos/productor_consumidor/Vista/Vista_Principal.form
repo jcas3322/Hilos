@@ -61,8 +61,8 @@
         </Component>
         <Component class="javax.swing.JLabel" name="imagen_cocinero">
           <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="/Users/julioaguilar/NetBeansProjects/Hilos/src/imagenes/descansando.png"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new javax.swing.ImageIcon(getClass().getResource(descansando))" type="code"/>
             </Property>
           </Properties>
           <Constraints>
@@ -73,8 +73,8 @@
         </Component>
         <Component class="javax.swing.JLabel" name="cliente1">
           <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="/Users/julioaguilar/NetBeansProjects/Hilos/src/imagenes/cliente1.gif"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new javax.swing.ImageIcon(getClass().getResource(cliente1_pide))" type="code"/>
             </Property>
           </Properties>
           <Constraints>
@@ -85,8 +85,8 @@
         </Component>
         <Component class="javax.swing.JLabel" name="cliente2">
           <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="/Users/julioaguilar/NetBeansProjects/Hilos/src/imagenes/2/cliente2.gif"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new javax.swing.ImageIcon(getClass().getResource(cliente2_pide))" type="code"/>
             </Property>
           </Properties>
           <Constraints>
